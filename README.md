@@ -2,6 +2,10 @@
 
 Docker image with compiled OpenCV, Dlib, ffmpeg and Node.js
 
+[![](https://images.microbadger.com/badges/version/m03geek/ffmpeg-opencv-dlib-node:alpine.svg)](https://microbadger.com/images/m03geek/ffmpeg-opencv-dlib-node:alpine "version")[![](https://images.microbadger.com/badges/image/m03geek/ffmpeg-opencv-dlib-node:alpine.svg)](https://microbadger.com/images/m03geek/ffmpeg-opencv-dlib-node:alpine "layers")
+
+[![](https://images.microbadger.com/badges/version/m03geek/ffmpeg-opencv-dlib-node:stretch.svg)](https://microbadger.com/images/m03geek/ffmpeg-opencv-dlib-node:stretch "version")[![](https://images.microbadger.com/badges/image/m03geek/ffmpeg-opencv-dlib-node:stretch.svg)](https://microbadger.com/images/m03geek/ffmpeg-opencv-dlib-node:stretch "layers")
+
 Based on [ffmpeg-opencv-dlib image](https://hub.docker.com/r/m03geek/ffmpeg-opencv-dlib/)
 
 # Node.js lib compatibility
