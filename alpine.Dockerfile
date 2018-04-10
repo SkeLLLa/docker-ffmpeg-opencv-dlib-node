@@ -7,8 +7,7 @@ ARG DLIB_VERSION
 
 ENV DLIB_VERSION=${DLIB_VERSION} \
     LIB_PREFIX=${LIB_PREFIX} \
-    DLIB_INCLUDE_DIR='$LIB_PREFIX/include' \
-    DLIB_LIB_DIR='$LIB_PREFIX/lib'
+    OPENCV4NODEJS_DISABLE_AUTOBUILD=1
 
 RUN echo "Dlib: ${DLIB_VERSION}" \
     && apk add -u --no-cache --virtual .build-dependencies $BUILD_DEPS \
