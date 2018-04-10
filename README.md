@@ -4,6 +4,11 @@ Docker image with compiled OpenCV, Dlib, ffmpeg and Node.js
 
 Based on [ffmpeg-opencv-dlib image](https://hub.docker.com/r/m03geek/ffmpeg-opencv-dlib/)
 
+# Node.js lib compatibility
+
+* [opencv4nodejs](https://www.npmjs.com/package/opencv4nodejs) - native module, see installing instructions above and follow module documentation.
+* [face-recognition](https://www.npmjs.com/package/face-recognition) - native module, see installing instructions above and follow module documentation.
+
 # Other images:
 
 ## Without FFmpeg
