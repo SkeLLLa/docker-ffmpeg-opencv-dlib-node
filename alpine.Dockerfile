@@ -1,38 +1,26 @@
 FROM m03geek/ffmpeg-opencv-dlib:alpine
 
-ARG RUNTIME_DEPS='libpng libjpeg-turbo giflib openblas libx11'
-ARG BUILD_DEPS='wget unzip cmake build-base linux-headers libpng-dev libjpeg-turbo-dev giflib-dev openblas-dev libx11-dev'
-ARG LIB_PREFIX='/usr/local'
-ARG DLIB_VERSION
+ARG RUNTIME_DEPS='openssl zlib'
+ARG BUILD_DEPS='wget make gcc g++ python linux-headers binutils-gold libstdc++ openssl-dev zlib-dev'
+ARG NODE_VERSION
 
-ENV DLIB_VERSION=${DLIB_VERSION} \
-    LIB_PREFIX=${LIB_PREFIX} \
+ENV NODE_VERSION=${NODE_VERSION} \
     OPENCV4NODEJS_DISABLE_AUTOBUILD=1
 
-RUN echo "Dlib: ${DLIB_VERSION}" \
+RUN echo "Node.js: ${NODE_VERSION}" \
     && apk add -u --no-cache --virtual .build-dependencies $BUILD_DEPS \
-    && wget -q https://github.com/davisking/dlib/archive/v${DLIB_VERSION}.zip -O dlib.zip \
-    && dlib_cmake_flags="-D CMAKE_BUILD_TYPE=RELEASE \
-    -D CMAKE_INSTALL_PREFIX=$LIB_PREFIX \
-    -D DLIB_NO_GUI_SUPPORT=OFF \
-    -D DLIB_USE_BLAS=ON \
-    -D DLIB_GIF_SUPPORT=ON \
-    -D DLIB_PNG_SUPPORT=ON \
-    -D DLIB_JPEG_SUPPORT=ON \
-    -D DLIB_USE_CUDA=OFF" \
-    && unzip -qq dlib.zip \
-    && mv dlib-${DLIB_VERSION} dlib \
-    && rm dlib.zip \
-    && cd dlib \
-    && mkdir -p build \
-    && cd build \
-    && cmake $dlib_cmake_flags .. \
-    && make -j $(getconf _NPROCESSORS_ONLN) \
-    && cd /dlib/build \
+    && wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}.tar.xz -O node.tar.xz \
+    && mkdir /node \
+    && tar -xJf node.tar.xz --strip 1 -C /node \
+    && cd /node \
+    && ./configure --prefix=/usr ${CONFIG_FLAGS} \
+    && make -j$(getconf _NPROCESSORS_ONLN) \
     && make install \
-    && cp /dlib/dlib/*.txt $LIB_PREFIX/include/dlib/ \
     && cd / \
-    && rm -rf /dlib \
+    && rm node.tar.xz \
+    && rm -rf /node \
+    && npm install -g npm@$latest \
+    && find /usr/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf \
     && apk del .build-dependencies \
     && apk add -u --no-cache $RUNTIME_DEPS \
     && rm -rf /var/cache/apk/* /usr/share/man /usr/local/share/man /tmp/*

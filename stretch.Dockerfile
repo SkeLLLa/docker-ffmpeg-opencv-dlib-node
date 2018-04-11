@@ -1,39 +1,20 @@
 FROM m03geek/ffmpeg-opencv-dlib:stretch
 
-ARG RUNTIME_DEPS='ca-certificates libpng-dev libjpeg-dev libgif-dev libopenblas-dev libx11-dev'
-ARG BUILD_DEPS='apt-utils wget unzip cmake build-essential pkg-config'
+ARG BUILD_DEPS='wget xz-utils'
 ARG LIB_PREFIX='/usr/local'
-ARG DLIB_VERSION
+ARG NODE_VERSION
 
-ENV DLIB_VERSION=${DLIB_VERSION} \
-    LIB_PREFIX=${LIB_PREFIX} \
+ENV NODE_VERSION=${NODE_VERSION} \
     OPENCV4NODEJS_DISABLE_AUTOBUILD=1
 
-RUN echo "Dlib: ${DLIB_VERSION}" \
-    && apt-get update && apt-get install -y ${BUILD_DEPS} ${RUNTIME_DEPS} --no-install-recommends \
-    && wget -q https://github.com/davisking/dlib/archive/v${DLIB_VERSION}.zip -O dlib.zip \
-    && dlib_cmake_flags="-D CMAKE_BUILD_TYPE=RELEASE \
-    -D CMAKE_INSTALL_PREFIX=$LIB_PREFIX \
-    -D DLIB_NO_GUI_SUPPORT=OFF \
-    -D DLIB_USE_BLAS=ON \
-    -D DLIB_GIF_SUPPORT=ON \
-    -D DLIB_PNG_SUPPORT=ON \
-    -D DLIB_JPEG_SUPPORT=ON \
-    -D DLIB_USE_CUDA=OFF" \
-    && unzip -qq dlib.zip \
-    && mv dlib-${DLIB_VERSION} dlib \
-    && rm dlib.zip \
-    && cd dlib \
-    && mkdir -p build \
-    && cd build \
-    && cmake $dlib_cmake_flags .. \
-    && make -j $(getconf _NPROCESSORS_ONLN) \
-    && cd /dlib/build \
-    && make install \
-    && cp /dlib/dlib/*.txt $LIB_PREFIX/include/dlib/ \
+RUN echo "Node.js: ${NODE_VERSION}" \
+    && apt-get update && apt-get install -y ${BUILD_DEPS} --no-install-recommends \
+    && wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz -O node.tar.xz \
+    && tar -xJf node.tar.xz -C ${LIB_PREFIX} --strip-components=1 --no-same-owner \
+    && ln -s ${LIB_PREFIX}/bin/node ${LIB_PREFIX}/bin/nodejs \
     && cd / \
-    && rm -rf /dlib \
+    && rm node.tar.xz \
+    && find /usr/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf \
     && apt-get purge -y --auto-remove $BUILD_DEPS \
     && apt-get autoremove -y --purge \
-    && apt-get install -y $RUNTIME_DEPS --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* /usr/share/man /usr/local/share/man /tmp/*
