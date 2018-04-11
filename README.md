@@ -1,6 +1,6 @@
 # docker-ffmpeg-opencv-dlib
 
-Docker image with compiled OpenCV, Dlib, ffmpeg and Node.js
+Docker image with compiled OpenCV, Dlib, ffmpeg and Node.js.
 
 [![](https://images.microbadger.com/badges/version/m03geek/ffmpeg-opencv-dlib-node:alpine.svg)](https://microbadger.com/images/m03geek/ffmpeg-opencv-dlib-node:alpine "version")[![](https://images.microbadger.com/badges/image/m03geek/ffmpeg-opencv-dlib-node:alpine.svg)](https://microbadger.com/images/m03geek/ffmpeg-opencv-dlib-node:alpine "layers")
 
