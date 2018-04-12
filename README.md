@@ -13,6 +13,23 @@ Based on [ffmpeg-opencv-dlib image](https://hub.docker.com/r/m03geek/ffmpeg-open
 * [opencv4nodejs](https://www.npmjs.com/package/opencv4nodejs) - native module, see installing instructions above and follow module documentation.
 * [face-recognition](https://www.npmjs.com/package/face-recognition) - native module, see installing instructions above and follow module documentation.
 
+## Installing opencv4nodejs
+
+```Dockerfile
+FROM m03geek/ffmpeg-opencv-dlib-node:alpine
+RUN apk update && apk add -u --no-cache python make g++
+RUN npm i opencv4nodejs
+```
+
+## Installing face-recognition
+
+```Dockerfile
+FROM m03geek/ffmpeg-opencv-dlib-node:alpine
+RUN apk update && apk add -u python make g++ libpng-dev libjpeg-turbo-dev giflib-dev libx11-dev
+RUN npm init -y
+RUN npm i face-recognition
+```
+
 # Other images:
 
 ## Without FFmpeg
