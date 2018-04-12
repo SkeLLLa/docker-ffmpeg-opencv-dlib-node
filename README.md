@@ -1,4 +1,4 @@
-# docker-ffmpeg-opencv-dlib
+# docker-ffmpeg-opencv-dlib-node
 
 Docker image with compiled OpenCV, Dlib, ffmpeg and Node.js.
 
