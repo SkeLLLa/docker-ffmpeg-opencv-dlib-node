@@ -2,9 +2,9 @@ FROM m03geek/ffmpeg-opencv-dlib:stretch
 
 ARG BUILD_DEPS='wget xz-utils'
 ARG LIB_PREFIX='/usr/local'
-ARG NODE_VERSION
+ARG VERSION
 
-ENV NODE_VERSION=${NODE_VERSION} \
+ENV NODE_VERSION=${VERSION} \
     OPENCV4NODEJS_DISABLE_AUTOBUILD=1
 
 RUN echo "Node.js: ${NODE_VERSION}" \
