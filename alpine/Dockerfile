@@ -10,4 +10,5 @@ COPY --from=nodebase /usr/include/* /usr/include/
 
 RUN ln -s /usr/lib/node_modules/npm/bin/npm-cli.js /usr/bin/npm \
   && ln -s /usr/lib/node_modules/npm/bin/npx-cli.js /usr/bin/npx \
+  && rm -rf /usr/local/lib && ln -s /usr/local/lib64 /usr/local/lib \
   && rm /usr/lib/node_modules/npm/*.md
