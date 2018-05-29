@@ -10,7 +10,7 @@ Based on [ffmpeg-opencv-dlib image](https://hub.docker.com/r/m03geek/ffmpeg-open
 
 # Versions (latest)
 
-* node - 10.2.0
+* node - 10.2.1
 * dlib - 19.8
 * opencv - 3.4.1
 
